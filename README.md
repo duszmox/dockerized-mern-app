@@ -1,4 +1,4 @@
-# Dockerized MERN app [![Deploy status](https://github.com/duszmox/enciklopedia/actions/workflows/manual.yml/badge.svg)](https://github.com/duszmox/enciklopedia/actions/workflows/manual.yml)
+# Dockerized MERN app
 
 ## Setup
 
