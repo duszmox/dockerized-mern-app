@@ -1,0 +1,60 @@
+version: "3.7"
+services:
+  client:
+    container_name: mern-client-production
+    image: mern-client-production:${ENV}
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - mern-network
+    depends_on:
+      - server
+    restart: unless-stopped
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+
+  server:
+    container_name: mern-api
+    image: mern-api
+    env_file:
+      - ./server/config/${ENV}.env
+    ports:
+      - 5000:3000
+    networks:
+      - mern-network
+    depends_on:
+      - db
+    command: /usr/app/node_modules/.bin/nodemon -L server.js
+    restart: unless-stopped
+
+  db:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - mern-network
+    restart: unless-stopped
+    container_name: mern-db-production
+networks:
+  mern-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
+  caddy-data:
+    driver: local
+  caddy-config:
+    driver: local
+  jenkins_data:
+    driver: local
+  portainer-data:
+    driver: local
+

@@ -1,0 +1,25 @@
+# Pull Docker Hub base image
+FROM node:lts-bullseye AS builder
+# Set working directory
+WORKDIR /usr/app
+# Install app dependencies
+COPY package*.json ./
+RUN npm install -qy
+# Copy app to container
+COPY . .
+
+ARG BASE_URL
+ENV REACT_APP_BASE_URL=${BASE_URL}
+
+# Run the "dev" script in package.json
+RUN npm run build
+
+FROM caddy:2.1.1
+
+ARG CADDYFILE
+COPY ${CADDYFILE} /etc/caddy/Caddyfile
+
+COPY --from=builder /usr/app/build/ /srv/
+ 
+EXPOSE 80
+EXPOSE 443
