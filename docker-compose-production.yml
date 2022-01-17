@@ -53,8 +53,6 @@ volumes:
     driver: local
   caddy-config:
     driver: local
-  jenkins_data:
-    driver: local
   portainer-data:
     driver: local
 

@@ -1,7 +1,7 @@
 import React from "react";
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
-import axios from "axios";
+// import axios from "axios";
 const baseURL = process.env.REACT_APP_BASE_URL;
 console.log(baseURL);
 //fetch data from the server
@@ -40,7 +40,8 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <h1> Fetch data from an api </h1> {data.message}
+        <h1 className="text-3xl font-bold"> Fetch data from an api </h1>{" "}
+        {data.message}
       </div>
     );
   }
